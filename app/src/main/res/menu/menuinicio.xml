@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mjuegos"
+        android:title="Juegos"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/mreseñas"
+        android:title="Reseñas"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/mactividad"
+        android:title="Actividad"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/mlistas"
+        android:title="Listas"
+        app:showAsAction="always" />
+</menu>

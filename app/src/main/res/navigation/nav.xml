@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/page_inicio">
+
+    <fragment
+        android:id="@+id/page_inicio"
+        android:name="com.example.gamerating.InicioFragment"
+        tools:layout="@layout/fragment_inicio"/>
+    <fragment
+        android:id="@+id/page_inicioLupa"
+        android:name="com.example.gamerating.InicioLupaFragment"
+        tools:layout="@layout/fragment_inicio_lupa"/>
+    <fragment
+        android:id="@+id/page_inicioAnadir"
+        android:name="com.example.gamerating.InicioAnadirJuegosFragment"
+        tools:layout="@layout/fragment_inicio_anadir_juegos"/>
+    <fragment
+        android:id="@+id/page_inicioActividad"
+        android:name="com.example.gamerating.InicioActividadAmigosFragment"
+        tools:layout="@layout/fragment_inicio_actividad_amigos"/>
+    <fragment
+        android:id="@+id/page_inicioPerfil"
+        android:name="com.example.gamerating.InicioPerfilFragment"
+        tools:layout="@layout/fragment_inicio_perfil"/>
+
+</navigation>

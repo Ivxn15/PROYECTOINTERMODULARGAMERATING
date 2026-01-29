@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/page_inicio"
+        android:icon="?attr/actionModeCopyDrawable"
+        app:actionProviderClass="androidx.mediarouter.app.MediaRouteActionProvider"
+        app:showAsAction="always"
+        tools:icon="?attr/actionModeCopyDrawable" />
+    <item
+        android:id="@+id/page_inicioLupa"
+        android:icon="@android:drawable/ic_menu_search"
+        app:actionProviderClass="androidx.mediarouter.app.MediaRouteActionProvider"
+        app:showAsAction="always"
+        tools:icon="@android:drawable/ic_menu_search" />
+    <item
+        android:id="@+id/page_inicioAnadir"
+        android:icon="@android:drawable/ic_menu_add"
+        app:actionProviderClass="androidx.mediarouter.app.MediaRouteActionProvider"
+        app:showAsAction="always"
+        tools:icon="@android:drawable/ic_menu_add" />
+    <item
+        android:id="@+id/page_inicioActividad"
+        android:icon="@drawable/rayo"
+        app:actionProviderClass="androidx.mediarouter.app.MediaRouteActionProvider"
+        app:showAsAction="always"
+        tools:icon="@drawable/rayo" />
+    <item
+        android:id="@+id/page_inicioPerfil"
+        android:icon="@drawable/perona"
+        app:actionProviderClass="androidx.mediarouter.app.MediaRouteActionProvider"
+        app:showAsAction="always"
+        tools:icon="@drawable/perona" />
+</menu>

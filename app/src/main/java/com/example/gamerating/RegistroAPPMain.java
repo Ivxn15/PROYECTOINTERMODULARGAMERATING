@@ -29,6 +29,7 @@ public class RegistroAPPMain extends AppCompatActivity {
     ImageButton imageButton;
     Button button;
     ImageView fotoAvatar;
+    API_Usuarios api;
 
 
     ActivityResultLauncher<Intent> resultLauncher;

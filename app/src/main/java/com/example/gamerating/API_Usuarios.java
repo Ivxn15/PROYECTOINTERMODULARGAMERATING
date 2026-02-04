@@ -24,7 +24,7 @@ public class API_Usuarios {
     public void subirUsuarios(String nombre, String correo, String contrasena, String imagen, ApiCallback callback) {
         new Thread(() -> {
             try {
-                URL url = new URL("http://localhost:8080/tema5maven/rest/usuarios");
+                URL url = new URL("http://10.0.2.2:8080/tema5maven/rest/usuarios");
                 HttpURLConnection con = (HttpURLConnection) url.openConnection(); // abrir conexion
                 con.setRequestMethod("POST");
                 con.setRequestProperty("Content-Type", "application/json");

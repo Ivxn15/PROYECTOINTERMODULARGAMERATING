@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +31,7 @@ public class RegistroAPPMain extends AppCompatActivity {
     Button button;
     ImageView fotoAvatar;
     API_Usuarios api;
+    EditText imagenString;
 
 
     ActivityResultLauncher<Intent> resultLauncher;
@@ -51,9 +53,14 @@ public class RegistroAPPMain extends AppCompatActivity {
         imageButton = findViewById(R.id.BotonImagen1);
         button = findViewById(R.id.registrarse);
         fotoAvatar = findViewById(R.id.Avatar);
-        imageButton.setOnClickListener(v -> CogerImagen()); //LLamo a la funcion cogerImagen para que cuando presione el boton me deje escoger imagen de la galeria
+        imagenString = findViewById(R.id.imagenString);
+        api = new API_Usuarios();
         ColocarAvatar();
+        imageButton.setOnClickListener(v -> CogerImagen()); //LLamo a la funcion cogerImagen para que cuando presione el boton me deje escoger imagen de la galeria
         inicioApp();
+
+
+
 
 
 
@@ -67,8 +74,28 @@ public class RegistroAPPMain extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RegistroAPPMain.this,Principal.class);
-                startActivity(intent);
+                api.subirUsuarios(nombreSesion.getText().toString(),emailSesion.getText().toString(),contraseñaSesion.getText().toString(),imagenString.getText().toString(),
+                        new API_Usuarios.ApiCallback() { //Interfaz por el fallo de que la red va mas lenta que el codigo
+                            @Override
+                            public void onSuccess() {
+                                // El servidor respondió bien. Ahora SÍ saltamos.
+                                runOnUiThread(() -> {
+                                    Intent intent = new Intent(RegistroAPPMain.this, Principal.class);
+                                    startActivity(intent);
+                                    finish(); // Cerramos registro para que no pueda volver
+                                });
+                            }
+
+                            @Override
+                            public void onError(String mensaje) {
+                                Log.e("API_ERROR", mensaje);
+                                runOnUiThread(() ->
+                                        Toast.makeText(RegistroAPPMain.this, mensaje, Toast.LENGTH_LONG).show());
+                            }
+                        }
+                );
+
+
             }
         });
     }
@@ -97,5 +124,6 @@ public class RegistroAPPMain extends AppCompatActivity {
                     }
             );
         }
+
 
 }

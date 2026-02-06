@@ -1,12 +1,16 @@
 package com.example.gamerating;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Base64;
 import android.util.Log;
 
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -37,16 +41,16 @@ public class API_Usuarios {
                 json.put("imagen", imagen);
                 System.out.println(json);
 
-                // Enviar JSON
+
                 try (OutputStream os = con.getOutputStream()) {
                     os.write(json.toString().getBytes(StandardCharsets.UTF_8));
                 }
 
-                // Obtener código de respuesta
+
                 int code = con.getResponseCode();
                 Log.i("CODIGO APIREST", "EL CODIGO RESTANTE ES " + code);
 
-                // Leer respuesta del servidor para depuración
+
                 InputStream is = (code >= 200 && code < 300) ? con.getInputStream() : con.getErrorStream();
                 BufferedReader br = new BufferedReader(new InputStreamReader(is));
                 StringBuilder response = new StringBuilder();
@@ -56,7 +60,7 @@ public class API_Usuarios {
                 }
                 Log.i("RESPUESTA API", response.toString());
 
-                // Ejecutar callback en hilo principal
+
                 Handler mainHandler = new Handler(Looper.getMainLooper());
                 if (code == 200 || code == 201) {
                     mainHandler.post(callback::onSuccess);
@@ -66,10 +70,67 @@ public class API_Usuarios {
                 }
 
             } catch (Exception e) {
-                // Ejecutar callback en hilo principal
+
                 new Handler(Looper.getMainLooper()).post(() -> callback.onError(e.getMessage()));
             }
         }).start();
+
     }
+    public void subirImagen(Uri imageUri, Context context, String nombre) {
+        new Thread(() -> {
+            try {
+                // Leer la imagen
+                InputStream is = context.getContentResolver().openInputStream(imageUri);
+                if (is == null) {
+                    Log.e("UPLOAD", "InputStream nulo");
+                    return;
+                }
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                byte[] buffer = new byte[4096];
+                int bytesRead;
+                while ((bytesRead = is.read(buffer)) != -1) {
+                    baos.write(buffer, 0, bytesRead);
+                }
+                is.close();
+                String base64Imagen = Base64.encodeToString(
+                        baos.toByteArray(),
+                        Base64.NO_WRAP
+                );
+                // Crear JSON
+                JSONObject json = new JSONObject();
+                json.put("nombre", nombre);
+                json.put("imagen", base64Imagen);
+                // Conexión HTTP
+                URL url = new URL("http://172.16.0.79:8080/tema5maven/rest/deportistas/imagen");
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("POST");
+                con.setDoOutput(true);
+                con.setDoInput(true);
+                con.setConnectTimeout(15000);
+                con.setReadTimeout(15000);
+                con.setRequestProperty(
+                        "Content-Type",
+                        "application/json; charset=UTF-8"
+                );
+                con.connect();
+                System.out.println("1");
+
+                // Enviar JSON
+                try (OutputStream os = con.getOutputStream()) {
+                    byte[] input = json.toString().getBytes(StandardCharsets.UTF_8);
+                    os.write(input);
+                    os.flush();
+                }
+                System.out.println("2");
+
+                // Leer respuesta
+                int code = con.getResponseCode();
+                Log.i("API", "Código respuesta: " + code);
+            } catch (Exception e) {
+                Log.e("UPLOAD", "Error al subir imagen", e);
+            }
+        }).start();
+    }
+
 }
 

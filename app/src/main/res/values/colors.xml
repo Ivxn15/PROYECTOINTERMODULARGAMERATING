@@ -5,5 +5,6 @@
     <color name="fondoRegistro">#CAB9B9</color>
     <color name="fondoApp">#242020</color>
     <color name="botonnavigation">#8392B8</color>
+    <color name="advertencia">#F20606</color>
 
 </resources>

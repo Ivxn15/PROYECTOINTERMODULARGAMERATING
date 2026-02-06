@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -34,6 +35,7 @@ public class RegistroAPPMain extends AppCompatActivity {
     EditText imagenString;
 
 
+
     ActivityResultLauncher<Intent> resultLauncher;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +57,10 @@ public class RegistroAPPMain extends AppCompatActivity {
         fotoAvatar = findViewById(R.id.Avatar);
         imagenString = findViewById(R.id.imagenString);
         api = new API_Usuarios();
+        confirmarContraseña();
         ColocarAvatar();
         imageButton.setOnClickListener(v -> CogerImagen()); //LLamo a la funcion cogerImagen para que cuando presione el boton me deje escoger imagen de la galeria
         inicioApp();
-
-
-
-
-
-
-
 
     }
 
@@ -74,6 +70,9 @@ public class RegistroAPPMain extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!confirmarContraseña()){
+                    return;
+                }
                 api.subirUsuarios(nombreSesion.getText().toString(),emailSesion.getText().toString(),contraseñaSesion.getText().toString(),imagenString.getText().toString(),
                         new API_Usuarios.ApiCallback() { //Interfaz por el fallo de que la red va mas lenta que el codigo
                             @Override
@@ -124,6 +123,25 @@ public class RegistroAPPMain extends AppCompatActivity {
                     }
             );
         }
+        private boolean  confirmarContraseña(){
+        String contraseña = contraseñaSesion.getText().toString();
+        String confirmaContraseña = confirmarcontraseñaSesion.getText().toString();
+        if (!contraseña.equals(confirmaContraseña)){
+            Toast.makeText(RegistroAPPMain.this,"La contraseña tiene que ser la misma",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+        }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101 && resultCode == RESULT_OK && data != null) {
+            Uri imageUri = data.getData();
+            api.subirImagen(imageUri,this,"prueba");
+            //iv.setImageURI(imageUri);
+        }
+    }
+
 
 
 }

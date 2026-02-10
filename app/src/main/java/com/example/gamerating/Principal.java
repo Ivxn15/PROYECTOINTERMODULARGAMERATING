@@ -36,31 +36,7 @@ public class Principal extends AppCompatActivity {
                 navHostFragment.getNavController()
         );
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater=getMenuInflater();
-        menuInflater.inflate(R.menu.menuinicio,menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id=item.getItemId();
-        if (id==R.id.mjuegos){
-            Intent intent = new Intent(Principal.this,Principal.class);
-            startActivity(intent);
-            return true;
-        }else if (id==R.id.mreseñas){
-
-            return true;
-        }else if (id==R.id.mactividad){
-            Toast.makeText(this, "Otro", Toast.LENGTH_SHORT).show();
-            return true;
-        }else if (id==R.id.mlistas){
-            Toast.makeText(this, "Submenú 1", Toast.LENGTH_SHORT).show();
-            return true;
-        };
-        return super.onOptionsItemSelected(item);
-    }
+    
 }
 
 

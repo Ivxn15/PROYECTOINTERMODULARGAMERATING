@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="180" />
+    <meta
+      name="description"
+      content="GAMERATING es una pagina web de valoracion de videojuegos"
+    />
+    <meta name="keywords" content="videojuegos,reseña" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="web.css" />
+    <title>GAMERATING</title>
+  </head>
+  <body>
+  <div id="fondo1" class="fondo"></div>
+  <div id="fondo2" class="fondo"></div>
+
+  <script>
+    //ANIMACION FONDO CAMBIO DE IMAGENES CON JAVASCRIPT
+    var imagenes = [
+      "Imagenes/rdr2.png",
+      "Imagenes/tlou2.jpg",
+      "Imagenes/re7.jpg",
+      "Imagenes/skyrim.jpg",
+      "Imagenes/ern.jpg",
+      "Imagenes/link.jpg"
+    ];
+
+    // Carga imagenes
+    var precarga = [];
+    for (var j = 0; j < imagenes.length; j++) {
+      precarga[j] = new Image();
+      precarga[j].src = imagenes[j];
+    }
+
+    var i = 0;
+    var fondo1 = document.getElementById("fondo1");
+    var fondo2 = document.getElementById("fondo2");
+
+    fondo1.style.backgroundImage = "url(" + imagenes[0] + ")";
+    fondo1.style.opacity = 1;
+
+    setInterval(function() {
+      i = (i + 1) % imagenes.length;
+
+      if (fondo1.style.opacity == "1") {
+        fondo2.style.backgroundImage = "url(" + imagenes[i] + ")";
+        fondo2.style.opacity = 1;
+        fondo1.style.opacity = 0;
+      } else {
+        fondo1.style.backgroundImage = "url(" + imagenes[i] + ")";
+        fondo1.style.opacity = 1;
+        fondo2.style.opacity = 0;
+      }
+    }, 5000);
+  </script>
+</body>
+
+</html>

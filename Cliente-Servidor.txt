@@ -1,0 +1,30 @@
+			Cliente 				Servidor
+
+		Get-/coches 					Get
+		Accept JSON					Produces    JSON
+	-	-	-	-	-	-	-	-	-	-	-	-	-
+
+		POST/coches					POST
+	Content-Type XML					Produces JSON
+
+
+						IMPORTANTE EXAMEN
+
+						@PathParam
+	@GET
+    @Path("/{modelo}")
+    public String quienEres(@PathParam("modelo") String name) {
+        return "Hola, soy un " + name;
+    }
+
+						@QueryParam
+
+ @GET
+    @Path("coche")
+    public String marcaYModelo(@QueryParam("marca") String marca,
+            @QueryParam("modelo") String mo) {
+        return "La marca es " + marca + " y el modelo " + mo;
+    }
+
+
+						@FormParam
